@@ -1,0 +1,11 @@
+2020-04-24 14:43:15.923  INFO 22492 --- [main] h.a.HongtaiyangArtificerApplicationTests : Starting HongtaiyangArtificerApplicationTests on DESKTOP-OUVVKMU with PID 22492 (started by tangtuo in D:\workspace\hongtaiyang\hongtaiyang-artificer)
+2020-04-24 14:43:15.926  INFO 22492 --- [main] h.a.HongtaiyangArtificerApplicationTests : The following profiles are active: dev
+2020-04-24 14:43:17.037  WARN 22492 --- [main] o.m.s.mapper.ClassPathMapperScanner      : No MyBatis mapper was found in '[com.hongtaiyang.artificer]' package. Please check your configuration.
+2020-04-24 14:43:17.126  INFO 22492 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-04-24 14:43:17.131  INFO 22492 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-04-24 14:43:17.176  INFO 22492 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 13ms. Found 0 Redis repository interfaces.
+2020-04-24 14:43:18.962  INFO 22492 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-24 14:43:20.099  INFO 22492 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2020-04-24 14:43:22.082  INFO 22492 --- [main] h.a.HongtaiyangArtificerApplicationTests : Started HongtaiyangArtificerApplicationTests in 7.054 seconds (JVM running for 8.557)
+2020-04-24 14:43:22.524  INFO 22492 --- [SpringContextShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2020-04-24 14:43:22.526  INFO 22492 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'

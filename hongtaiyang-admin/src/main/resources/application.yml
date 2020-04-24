@@ -1,0 +1,36 @@
+server:
+  servlet:
+    context-path: /hongtaiyang-admin
+spring:
+  profiles:
+    active: dev
+  jackson:
+    #日期格式化
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  application:
+    name: api-tool
+  main:
+    allow-bean-definition-overriding: true
+swagger2:
+  apiInfo:
+    title: 接口工具
+    version: 1.0
+    description: 接口工具API
+    contact:
+      name: tangtuo
+      url: http://127.0.0.1
+      email: xxx
+  apis:
+    basePackage: com.honttaiyang.admin
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*.xml
+  #实体包,多个用逗号分隔
+  type-aliases-package: cn.com.citydo.api.tool.interfaces.entity
+
+logging:
+  file: logs/flowable.log
+  file.max-size: 50MB
+
+

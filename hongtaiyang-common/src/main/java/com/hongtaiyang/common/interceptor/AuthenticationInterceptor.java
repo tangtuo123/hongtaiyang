@@ -1,6 +1,10 @@
 package com.hongtaiyang.common.interceptor;
 
 import com.hongtaiyang.common.annotation.Authentication;
+import com.hongtaiyang.common.constant.RedisConstant;
+import com.hongtaiyang.common.constant.TerminalTypeConstant;
+import com.hongtaiyang.common.enums.SystemCode;
+import com.hongtaiyang.common.exception.SysException;
 import com.hongtaiyang.common.utils.JWTUtil;
 import com.hongtaiyang.common.utils.RedisUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +29,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
     private RedisUtil redisUtil;
 
 
-
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         // 从 http 请求头中取出 token
@@ -40,17 +43,42 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         if (method.isAnnotationPresent(Authentication.class)) {
             // 判断token是否为空
             if (StringUtils.isBlank(token)) {
+                throw SysException.asException(SystemCode.AUTH_ERROR, "请先登录");
             }
-            // 从token中获取userId和tenantId
+            // 从请求路径中获取terminalType
+            String parameter = request.getParameter("terminalType");
+            // 从token中获取userId和terminalType
             Integer userId = JWTUtil.getUserId(token);
             String terminalType = JWTUtil.getTerminalType(token);
             if (userId == null || StringUtils.isBlank(terminalType)) {
+                throw SysException.asException(SystemCode.AUTH_ERROR, "token解析有误");
             }
-
+            if (!terminalType.equals(parameter)) {
+                throw SysException.asException(SystemCode.AUTH_ERROR, "终端类型有误");
+            }
+            String tokenPrefix = RedisConstant.getTokenPrefixByTerminalType(terminalType);
+            // 从redis中获取token
+            String redisToken = (String) redisUtil.get(tokenPrefix + userId);
+            if (!token.equals(redisToken)) {
+                throw SysException.asException(SystemCode.AUTH_ERROR, "您的账号已在别处登录,请重新登录");
+            }
+            if (JWTUtil.isExpire(token)) {
+                // token已过期,但还在登录保质期内,返回刷新后的token,重新发起请求
+                if (StringUtils.isNotBlank(redisToken)) {
+                    String refreshToken = JWTUtil.createToken(userId.toString(), terminalType);
+                    // 获取token的失效时长,token失效时长的单位是毫秒 redis的过期时间是秒,所以需要除以1000
+                    Long expireTime = JWTUtil.getExpireTimeByTerminalType(terminalType) / 1000L;
+                    // 把刷新后的token存到redis里,设置过期时间为token失效时长的两倍
+                    redisUtil.set(tokenPrefix + userId, refreshToken, 2 * expireTime);
+                    throw SysException.asException(SystemCode.REQUEST_ERROR, refreshToken);
+                } else {
+                    // 重新登录
+                    throw SysException.asException(SystemCode.AUTH_ERROR, "登录已失效,请重新登录");
+                }
+            }
         }
-
         return true;
-}
+    }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {

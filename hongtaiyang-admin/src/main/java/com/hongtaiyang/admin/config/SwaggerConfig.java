@@ -11,14 +11,17 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 
 @Configuration
+@EnableSwagger2
 public class SwaggerConfig {
 
-    /* -----------swagger2 config----------- */
     @Value("${swagger2.apiInfo.title}")
     private String title;
     @Value("${swagger2.apiInfo.version}")
@@ -34,19 +37,24 @@ public class SwaggerConfig {
     @Value("${swagger2.apis.basePackage}")
     private String basePackage;
 
-    @Bean
-    public Docket createRestApi() {
+    @Bean(value = "defaultApi")
+    public Docket defaultApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(new ApiInfoBuilder()
-                        .title(title)
-                        .version(version)
-                        .description(description)
-                        .contact(new Contact(name, url, email))
-                        .build())
+                .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.basePackage(basePackage))
                 .paths(PathSelectors.any())
                 .build();
     }
-    /* -----------swagger2 config----------- */
+
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title(title)
+                .description(description)
+                .termsOfServiceUrl(url)
+                .contact(new Contact(this.name, this.url, this.email))
+                .version(version)
+                .build();
+    }
 }

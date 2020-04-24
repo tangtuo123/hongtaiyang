@@ -9,6 +9,8 @@ import com.hongtaiyang.common.enums.SystemCode;
 import com.hongtaiyang.common.exception.SysException;
 import com.hongtaiyang.common.utils.JWTUtil;
 import com.hongtaiyang.common.utils.RedisUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.omg.CORBA.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @RestController
 @RequestMapping("/user")
+@Api(tags = "用户管理类")
 public class UserController {
 
     @Autowired
@@ -35,6 +38,7 @@ public class UserController {
     private RedisUtil redisUtil;
 
     @PostMapping("/login")
+    @ApiOperation(value = "登录")
     public HttpResponse login(@RequestBody User user, HttpServletResponse response) {
         User u = userService.selectByUserName(user.getUserName());
         // 未注册

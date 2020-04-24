@@ -112,7 +112,7 @@ public class JWTUtil {
         }
     }
 
-    private static Long getExpireTimeByTerminalType(String terminalType) {
+    public static Long getExpireTimeByTerminalType(String terminalType) {
         Long time;
         switch (terminalType) {
             case TerminalTypeConstant.TYPE_ADMIN:

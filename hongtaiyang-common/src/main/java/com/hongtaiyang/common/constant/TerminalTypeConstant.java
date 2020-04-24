@@ -10,7 +10,7 @@ public class TerminalTypeConstant {
     /**
      * 终端类型
      */
-    public static String TYPE_ADMIN = "admin";
-    public static String TYPE_CLIENT = "client";
-    public static String TYPE_ARTIFICER = "artificer";
+    public static final String TYPE_ADMIN = "admin";
+    public static final String TYPE_CLIENT = "client";
+    public static final String TYPE_ARTIFICER = "artificer";
 }

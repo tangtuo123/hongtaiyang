@@ -1,5 +1,6 @@
 package com.hongtaiyang.admin;
 
+import com.hongtaiyang.common.annotation.Authentication;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class TestController {
     private String port;
 
     @GetMapping("/get")
+    @Authentication
     public Map getPort() {
         Map<String, String> map = new HashMap<>();
         map.put("port", port);

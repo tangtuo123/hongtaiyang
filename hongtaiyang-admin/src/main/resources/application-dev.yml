@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     #数据库基本配置信息
-    url: jdbc:mysql://localhost:3306/tangtuo?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/tang?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8
     username: root
     password: 636392
     platform: mysql

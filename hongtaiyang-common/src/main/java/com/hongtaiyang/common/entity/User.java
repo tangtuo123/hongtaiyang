@@ -10,7 +10,7 @@ import lombok.Data;
  * @version: 1.0.0
  */
 @Data
-@TableName(value = "tb_user")
+@TableName(value = "user")
 public class User {
 
     private Integer id;

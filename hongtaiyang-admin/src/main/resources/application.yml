@@ -27,8 +27,6 @@ mybatis-plus:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.hongtaiyang.common.entity
 
-logging:
-  file: logs/flowable.log
-  file.max-size: 50MB
+
 
 

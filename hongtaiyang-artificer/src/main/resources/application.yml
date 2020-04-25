@@ -5,7 +5,6 @@ spring:
   profiles:
     active: dev
   jackson:
-    #ÈÕÆÚ¸ñÊ½»¯
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   application:
@@ -14,23 +13,20 @@ spring:
     allow-bean-definition-overriding: true
 swagger2:
   apiInfo:
-    title: ½Ó¿Ú¹¤¾ß
+    title: é¸¿æ³°æ´‹å¹³å°-æŠ€å¸ˆç«¯api
     version: 1.0
-    description: ½Ó¿Ú¹¤¾ßAPI
+    description: é¸¿æ³°æ´‹å¹³å°-æŠ€å¸ˆç«¯api
     contact:
       name: tangtuo
       url: http://127.0.0.1
       email: xxx
   apis:
-    basePackage: cn.com.citydo.api.tool
+    basePackage: com.hongtaiyang.artificer
 
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
-  #ÊµÌå°ü,¶à¸öÓÃ¶ººÅ·Ö¸ô
   type-aliases-package: cn.com.citydo.api.tool.interfaces.entity
 
-logging:
-  file: logs/flowable.log
-  file.max-size: 50MB
+
 
 

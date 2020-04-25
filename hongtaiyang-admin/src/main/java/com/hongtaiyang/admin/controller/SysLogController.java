@@ -1,5 +1,7 @@
 package com.hongtaiyang.admin.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hongtaiyang.admin.service.ISysLogService;
 import com.hongtaiyang.admin.service.IUserService;
 import com.hongtaiyang.common.constant.RedisConstant;
@@ -7,6 +9,7 @@ import com.hongtaiyang.common.constant.TerminalTypeConstant;
 import com.hongtaiyang.common.entity.HttpResponse;
 import com.hongtaiyang.common.entity.SysLog;
 import com.hongtaiyang.common.entity.User;
+import com.hongtaiyang.common.entity.dto.SysLogDTO;
 import com.hongtaiyang.common.enums.SystemCode;
 import com.hongtaiyang.common.exception.SysException;
 import com.hongtaiyang.common.utils.JWTUtil;
@@ -15,10 +18,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -27,21 +27,18 @@ import java.util.List;
  * @author ：zhangyu
  */
 @RestController
-@RequestMapping("/syslog")
+@RequestMapping("/sysLog")
 @Api(tags = "系统日志管理类")
 public class SysLogController {
 
     @Autowired
     private ISysLogService sysLogService;
 
-    @PostMapping("/getLogs")
+    @PostMapping("/list/{pageNum}/{pageSize}")
     @ApiOperation(value = "获取所有日志链表")
-    public HttpResponse login(Long startTime, Long endTime) {
-        List<SysLog> sysLogList = null;
-        if (startTime == null && endTime == null) {
-            sysLogList = sysLogService.list();
-        }
-       // todo：起始时间
-        return HttpResponse.success(sysLogList);
+    public HttpResponse getLogList(@PathVariable Integer pageNum, @PathVariable Integer pageSize, @RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime) {
+        Page page = new Page<>(pageNum, pageSize);
+        IPage<SysLogDTO> logList = sysLogService.getLogList(page, startTime, endTime);
+        return HttpResponse.success(logList);
     }
 }

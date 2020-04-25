@@ -1,6 +1,7 @@
 package com.hongtaiyang.admin.controller;
 
 import com.hongtaiyang.admin.service.IUserService;
+import com.hongtaiyang.common.annotation.Authentication;
 import com.hongtaiyang.common.constant.RedisConstant;
 import com.hongtaiyang.common.constant.TerminalTypeConstant;
 import com.hongtaiyang.common.entity.HttpResponse;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -53,5 +55,14 @@ public class UserController {
         redisUtil.set(RedisConstant.TOKEN_ADMIN_PREFIX + u.getId(), token, 60 * 60 * 4);
         response.setHeader("Authorization", token);
         return HttpResponse.success(user);
+    }
+
+    @Authentication
+    @PostMapping(value = "/logout")
+    @ApiOperation(value = "退出登录")
+    public HttpResponse logout(HttpServletRequest request) {
+        // 把当前用户的token从redis里删掉
+        redisUtil.del(RedisConstant.TOKEN_ADMIN_PREFIX + JWTUtil.getUserId(request.getHeader("Authorization")));
+        return HttpResponse.success(true);
     }
 }

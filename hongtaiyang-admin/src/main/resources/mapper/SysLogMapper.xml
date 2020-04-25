@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hongtaiyang.admin.mapper.SysLogMapper">
+
+    <select id="getLogList" resultType="com.hongtaiyang.common.entity.dto.SysLogDTO">
+        select a.*,b.user_name from tb_sys_log a left join user b on a.user_id = b.id
+        where 1=1
+        <if test="startTime != '' and startTime != null">
+            and a.create_date>=startTime
+        </if>
+        <if test="endTime != '' and endTime != null">
+            and endTime>=a.create_date
+        </if>
+    </select>
+</mapper>

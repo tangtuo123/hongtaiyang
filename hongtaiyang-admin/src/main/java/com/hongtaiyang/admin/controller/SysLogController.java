@@ -34,7 +34,7 @@ public class SysLogController {
     @Autowired
     private ISysLogService sysLogService;
 
-    @PostMapping("/list/{pageNum}/{pageSize}")
+    @GetMapping("/list/{pageNum}/{pageSize}")
     @ApiOperation(value = "获取所有日志链表")
     public HttpResponse getLogList(@PathVariable Integer pageNum, @PathVariable Integer pageSize, @RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime) {
         Page page = new Page<>(pageNum, pageSize);

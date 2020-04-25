@@ -11,8 +11,8 @@ import com.hongtaiyang.common.utils.JWTUtil;
 import com.hongtaiyang.common.utils.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.omg.CORBA.SystemException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,15 +39,15 @@ public class UserController {
 
     @PostMapping("/login")
     @ApiOperation(value = "登录")
-    public HttpResponse login(@RequestBody User user, HttpServletResponse response) {
+    public HttpResponse login(@Validated @RequestBody User user, HttpServletResponse response) {
         User u = userService.selectByUserName(user.getUserName());
         // 未注册
         if (u == null) {
-            throw SysException.asException(SystemCode.RUNTIME_ERROR, "您还没有注册");
+            throw SysException.asException(SystemCode.LOGIN_ERROR, "您还没有注册");
         }
         // 密码错误
         if (!u.getPassword().equals(user.getPassword())) {
-            throw SysException.asException(SystemCode.RUNTIME_ERROR, "密码错误");
+            throw SysException.asException(SystemCode.LOGIN_ERROR, "密码错误");
         }
         String token = JWTUtil.createToken(u.getId().toString(), TerminalTypeConstant.TYPE_ADMIN);
         redisUtil.set(RedisConstant.TOKEN_ADMIN_PREFIX + u.getId(), token, 60 * 60 * 4);

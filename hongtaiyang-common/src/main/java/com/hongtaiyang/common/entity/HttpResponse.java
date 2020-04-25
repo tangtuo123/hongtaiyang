@@ -8,6 +8,7 @@ package com.hongtaiyang.common.entity;
 import com.alibaba.fastjson.JSON;
 import com.hongtaiyang.common.enums.SystemCode;
 import com.hongtaiyang.common.exception.SysException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 /**
  * @author zhuxj
@@ -63,6 +64,8 @@ public class HttpResponse {
         }
     }
 
+
+
     public static HttpResponse success(Object data) {
         return new HttpResponse(SystemCode.SUCCESS, data);
     }
@@ -85,6 +88,10 @@ public class HttpResponse {
     }
 
     public static HttpResponse error(SysException e, Object data) {
+        return new HttpResponse(e, data);
+    }
+
+    public static HttpResponse error(SystemCode e, Object data) {
         return new HttpResponse(e, data);
     }
 }

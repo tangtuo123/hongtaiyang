@@ -1,0 +1,30 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <property name="autoIncrement" value="true" dbms="mysql"/>
+
+    <changeSet id="1.0.0_1" author="zhangyu">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tb_sys_log" schemaName="test"/>
+            </not>
+        </preConditions>
+        <comment>tb_sys_log 系统日志建表</comment>
+        <sql>
+            CREATE TABLE `tb_sys_log` (
+            `id` INT ( 11 ) NOT NULL AUTO_INCREMENT,
+            `user_id` INT ( 11 ) DEFAULT NULL COMMENT '用户id',
+            `ip` VARCHAR ( 36 ) NOT NULL DEFAULT '' COMMENT 'ip',
+            `module` VARCHAR ( 256 ) NOT NULL DEFAULT '' COMMENT '模块',
+            `method` VARCHAR ( 256 ) DEFAULT '' COMMENT '方法',
+            `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '操作时间',
+            PRIMARY KEY ( `id` )
+            ) ENGINE = INNODB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8;
+        </sql>
+        <rollback>
+            DROP TABLE IF EXISTS `tb_sys_log`;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

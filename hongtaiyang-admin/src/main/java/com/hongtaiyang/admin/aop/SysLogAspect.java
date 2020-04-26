@@ -1,18 +1,14 @@
 package com.hongtaiyang.admin.aop;
 
-import com.alibaba.fastjson.JSONObject;
 import com.hongtaiyang.admin.service.ISysLogService;
-import com.hongtaiyang.admin.service.IUserService;
 import com.hongtaiyang.common.entity.SysLog;
 import com.hongtaiyang.common.utils.IpUtil;
 import com.hongtaiyang.common.utils.JWTUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.aopalliance.intercept.Joinpoint;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -23,9 +19,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 
 /**
@@ -64,6 +57,4 @@ public class SysLogAspect {
             sysLogService.save(sysLog);
         }
     }
-
-
 }

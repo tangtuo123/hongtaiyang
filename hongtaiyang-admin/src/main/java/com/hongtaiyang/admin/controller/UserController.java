@@ -25,8 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author ：tangtuo
  * @date ：Created in 2020/4/24 17:13
- * @description：
- * @version: 1.0.0
  */
 @RestController
 @RequestMapping("/user")

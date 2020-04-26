@@ -7,8 +7,6 @@ import java.util.Date;
 /**
  * @author ：tangtuo
  * @date ：Created in 2020/4/25 19:10
- * @description：
- * @version: 1.0.0
  */
 @Data
 public class SysLogDTO {

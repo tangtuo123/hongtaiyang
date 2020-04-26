@@ -17,9 +17,9 @@ public interface SysLogMapper extends BaseMapper<SysLog> {
     /**
      * 列表
      *
-     * @param page
-     * @param startTime
-     * @param endTime
+     * @param page      分页
+     * @param startTime 开始时间
+     * @param endTime   结束时间
      * @return
      */
     IPage<SysLogDTO> getLogList(Page page, @Param("startTime") String startTime, @Param("endTime") String endTime);

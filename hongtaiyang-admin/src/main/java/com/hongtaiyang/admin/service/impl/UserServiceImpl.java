@@ -12,8 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * @author ：tangtuo
  * @date ：Created in 2020/4/24 17:11
- * @description：
- * @version: 1.0.0
  */
 @Service
 @Transactional(rollbackFor = Exception.class)

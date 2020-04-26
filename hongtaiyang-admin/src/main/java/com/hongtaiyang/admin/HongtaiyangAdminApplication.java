@@ -12,5 +12,4 @@ public class HongtaiyangAdminApplication {
         SpringApplication.run(HongtaiyangAdminApplication.class, args);
     }
 
-
 }

@@ -17,6 +17,15 @@ public class RedisConstant {
     public static String TOKEN_CLIENT_PREFIX = "token:client:";
     public static String TOKEN_ARTIFICER_PREFIX = "token:artificer:";
 
+
+    /**
+     * 登录失败次数存入redis的key值的前缀
+     */
+    public static String LOGIN_ERROR_TIMES_ADMIN_PREFIX = "login:errorTimes:admin:";
+    public static String LOGIN_ERROR_TIMES_CLIENT_PREFIX = "login:errorTimes:admin:";
+    public static String LOGIN_ERROR_TIMES_ARTIFICER_PREFIX = "login:errorTimes:admin:";
+
+
     public static String getTokenPrefixByTerminalType(String terminalType) {
         String tokenPrefix;
         switch (terminalType) {

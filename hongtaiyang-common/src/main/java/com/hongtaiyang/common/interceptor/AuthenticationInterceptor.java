@@ -2,7 +2,6 @@ package com.hongtaiyang.common.interceptor;
 
 import com.hongtaiyang.common.annotation.Authentication;
 import com.hongtaiyang.common.constant.RedisConstant;
-import com.hongtaiyang.common.constant.TerminalTypeConstant;
 import com.hongtaiyang.common.enums.SystemCode;
 import com.hongtaiyang.common.exception.SysException;
 import com.hongtaiyang.common.utils.JWTUtil;

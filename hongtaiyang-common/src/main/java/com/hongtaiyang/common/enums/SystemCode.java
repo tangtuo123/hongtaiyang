@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2019/4/1 3:37:12
- * Created by zhuxj
- */
-
 package com.hongtaiyang.common.enums;
 
 

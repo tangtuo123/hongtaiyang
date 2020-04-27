@@ -8,45 +8,20 @@ package com.hongtaiyang.common.entity;
 import com.alibaba.fastjson.JSON;
 import com.hongtaiyang.common.enums.SystemCode;
 import com.hongtaiyang.common.exception.SysException;
+import lombok.Data;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 /**
  * @author zhuxj
  * @description 统一的接口返回信息体包括 【返回码】、【提示信息】、【数据】
  */
+@Data
 public class HttpResponse {
 
     private String code;
     private String message;
     private Object data;
 
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Object getData() {
-        return data;
-    }
-
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    public HttpResponse() {
-    }
 
     private HttpResponse(SystemCode sysCode, Object data) {
         this.code = sysCode.getCode();

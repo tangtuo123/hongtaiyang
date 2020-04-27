@@ -6,13 +6,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.hongtaiyang.common.entity.SysLog;
 import com.hongtaiyang.common.entity.dto.SysLogDTO;
 
-import java.util.List;
 
 /**
  * @author ：tangtuo
  * @date ：Created in 2020/4/25 13:39
- * @description：
- * @version: 1.0.0
  */
 public interface ISysLogService extends IService<SysLog> {
 

@@ -3,25 +3,14 @@ package com.hongtaiyang.admin.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hongtaiyang.admin.service.ISysLogService;
-import com.hongtaiyang.admin.service.IUserService;
-import com.hongtaiyang.common.constant.RedisConstant;
-import com.hongtaiyang.common.constant.TerminalTypeConstant;
+
 import com.hongtaiyang.common.entity.HttpResponse;
-import com.hongtaiyang.common.entity.SysLog;
-import com.hongtaiyang.common.entity.User;
 import com.hongtaiyang.common.entity.dto.SysLogDTO;
-import com.hongtaiyang.common.enums.SystemCode;
-import com.hongtaiyang.common.exception.SysException;
-import com.hongtaiyang.common.utils.JWTUtil;
-import com.hongtaiyang.common.utils.RedisUtil;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author ：zhangyu

@@ -12,8 +12,6 @@ import javax.validation.constraints.NotBlank;
 /**
  * @author ：tangtuo
  * @date ：Created in 2020/4/24 17:05
- * @description：
- * @version: 1.0.0
  */
 @Data
 @TableName(value = "user")

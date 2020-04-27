@@ -36,6 +36,7 @@ public class SysLogAspect {
 
     @Pointcut("@annotation(io.swagger.annotations.ApiOperation)")
     public void sysLog() {
+
     }
 
     @Before(value = "sysLog()")

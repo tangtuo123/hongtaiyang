@@ -8,15 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.LinkedList;
 import java.util.List;
 
-@RestController
-@ControllerAdvice
+@RestControllerAdvice
 public class SystemExceptionHandler {
 
     private static Logger logger = LoggerFactory.getLogger(SystemExceptionHandler.class);

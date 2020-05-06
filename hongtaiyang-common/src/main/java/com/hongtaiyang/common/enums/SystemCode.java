@@ -9,6 +9,7 @@ public enum SystemCode {
     RUNTIME_ERROR("0001", "系统内部错误"),
     LOGIN_ERROR("0002", "登录失败"),
     PARAMETER_ERROR("0003", "参数验证失败"),
+    CREATE_ERROR("0003", "创建失败"),
 
     ;
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.hongtaiyang.admin.mapper.UserMapper">
+
+    <update id="updateUser" parameterType="com.hongtaiyang.common.entity.User">
+        update tb_user_admin set
+        <if test="userName != null and userName != ''">
+            user_name = #{userName},
+        </if>
+        <if test="password != null and password != ''">
+            password = #{password},
+        </if>
+        <if test="nickName != null and nickName != ''">
+            nick_name = #{nickName},
+        </if>
+        <if test="roleId != null">
+            role_id = #{roleId},
+        </if>
+        update_date = now()
+    </update>
+
+    <update id="delete" parameterType="java.lang.String">
+        update tb_user_admin set del_flag = 1 ,update_date = now() where FIND_IN_SET(id,#{id})
+    </update>
+
+    <select id="getUserList" resultType="com.hongtaiyang.common.entity.dto.UserAdminDTO">
+        select user.*,
+        role.name roleName
+        from tb_user_admin user left join tb_role role
+        on user.role_id = role.id
+        where user.del_flag = 0
+        <if test="nickName != null and nickName != ''">
+            and nick_name like concat ('%',#{nickName},'%')
+        </if>
+        order by user.update_date desc
+    </select>
+</mapper>

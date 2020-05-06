@@ -5,7 +5,7 @@
             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
     <property name="autoIncrement" value="true" dbms="mysql"/>
 
-    <changeSet id="1.0.0_1" author="zhangyu">
+    <!--<changeSet id="1.0.0_1" author="zhangyu">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="tb_sys_log" schemaName="test"/>
@@ -26,5 +26,5 @@
         <rollback>
             DROP TABLE IF EXISTS `tb_sys_log`;
         </rollback>
-    </changeSet>
+    </changeSet>-->
 </databaseChangeLog>

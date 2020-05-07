@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongtaiyang.admin.mapper.ResourceMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.hongtaiyang.common.entity.Resource">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="label" column="label" jdbcType="VARCHAR"/>
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="level" column="level" jdbcType="INTEGER"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="path" column="path" jdbcType="INTEGER"/>
+        <result property="meta" column="meta" jdbcType="INTEGER"/>
+        <collection property="actionList" ofType="com.hongtaiyang.common.entity.Action">
+            <result property="actionId" column="actionId" jdbcType="INTEGER"/>
+            <result property="actionName" column="actionName" jdbcType="INTEGER"/>
+            <result property="actionLabel" column="actionLabel" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAll" resultMap="BaseResultMap" >
+        SELECT
+            a.*,
+            c.id actionId,
+            c.`name` actionName,
+            c.label actionLabel
+        FROM
+            tb_resource a
+            LEFT JOIN tb_rel_resource_action b ON a.id = b.resource_id
+            LEFT JOIN tb_action c ON b.action_id = c.id
+        ORDER BY
+            a.`level`,
+            a.pid,
+            a.sort,
+            c.id
+    </select>
+
+
+    <select id="selectByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+            b.*,
+            c.id actionId,
+            c.`name` actionName,
+            c.label actionLabel
+        FROM
+            tb_rel_resource_action_role a
+            LEFT JOIN tb_resource b ON a.resource_id = b.id
+            LEFT JOIN tb_action c ON c.id = a.action_id
+        WHERE
+            a.role_id =#{roleId}
+            and exists (select 1 from tb_resource where id = a.resource_id)
+            ORDER BY
+            b.`level`,
+            b.pid,
+            b.sort,
+            c.id
+    </select>
+
+</mapper>

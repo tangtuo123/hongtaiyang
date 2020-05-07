@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hongtaiyang.admin.mapper.RoleMapper">
+
+
+    <select id="selectAll" resultType="com.hongtaiyang.common.entity.dto.RoleDTO">
+        SELECT
+        a.*,
+        (
+        SELECT
+        GROUP_CONCAT( NAME )
+        FROM
+        tb_resource c
+        WHERE
+        EXISTS ( SELECT `resource_id` FROM tb_rel_resource_action_role b WHERE a.`id` = b.role_id AND b.resource_id
+        = c.id )
+        ) AS resourceMenu
+        FROM
+        tb_role a
+        where  a.del_flag = 0
+        <if test="name != null and name != ''">
+            and a.name like concat ('%',#{name},'%')
+        </if>
+        order by a.update_date desc
+    </select>
+
+    <update id="delById">
+        update tb_role set del_flag = 1,update_date = now()
+        where id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="modifyById" parameterType="com.hongtaiyang.common.entity.Role">
+        update tb_role set
+        <if test="name != null and name != ''">
+            name = #{name},
+        </if>
+        <if test="description != null and description != ''">
+            description = #{description},
+        </if>
+        update_date = now()
+        where id = #{id}
+    </update>
+
+    <select id="getAll" resultType="com.hongtaiyang.common.entity.Role" >
+        select * from tb_role where del_flag = 0
+    </select>
+
+
+
+</mapper>

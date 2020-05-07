@@ -111,7 +111,7 @@ public class UserController {
 
     @Authentication
     @DeleteMapping(value = "/delete/{id}")
-    @ApiOperation(value = "删除用户,支持批量删除,id之间用逗号隔开")
+    @ApiOperation(value = "删除用户,支持批量删除,删除多个的话id之间用逗号隔开")
     public HttpResponse delete(@PathVariable String id) {
         userService.delete(id);
         return HttpResponse.success(true);

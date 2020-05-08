@@ -17,7 +17,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
@@ -35,25 +34,22 @@ public class EncryptResponseBodyAdvice implements ResponseBodyAdvice<HttpRespons
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class<? extends HttpMessageConverter<?>> aClass) {
-        return Objects.requireNonNull(methodParameter.getMethod()).isAnnotationPresent(Secret.class);
+        // 对加了@Secret注解并且encrypt=true的方法响应数据进行加密处理
+        return Objects.requireNonNull(methodParameter.getMethod()).isAnnotationPresent(Secret.class) && methodParameter.getMethod().getAnnotation(Secret.class).encrypt();
     }
 
     @Override
     public HttpResponse beforeBodyWrite(HttpResponse httpResponse, MethodParameter methodParameter, MediaType mediaType, Class<? extends HttpMessageConverter<?>> aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
-        // 对加了@Secret注解并且encrypt=true的方法响应数据进行加密处理
-        Method method = methodParameter.getMethod();
-        if (method.getAnnotation(Secret.class).encrypt()) {
-            // 仅当请求成功时加密
-            if (httpResponse != null && RESPONSE_SUCCESS_CODE.equals(httpResponse.getCode())) {
-                String data = JSONObject.toJSONString(httpResponse.getData()).replaceAll("\\\\", "");
-                byte[] bytes = data.getBytes();
-                try {
-                    String encryptStr = Base64.encodeBase64String(RSAUtils.encryptByPublicKey(bytes, rsaPublicKey));
-                    httpResponse.setData(encryptStr);
-                } catch (Exception e) {
-                    log.error(e.getMessage(), e);
-                    throw SysException.asException(SystemCode.ENCRYPT_ERROR, e.getMessage());
-                }
+        // 仅当请求成功时加密
+        if (httpResponse != null && RESPONSE_SUCCESS_CODE.equals(httpResponse.getCode())) {
+            String data = JSONObject.toJSONString(httpResponse.getData());
+            byte[] bytes = data.getBytes();
+            try {
+                String encryptStr = Base64.encodeBase64String(RSAUtils.encryptByPublicKey(bytes, rsaPublicKey));
+                httpResponse.setData(encryptStr);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+                throw SysException.asException(SystemCode.ENCRYPT_ERROR, e.getMessage());
             }
         }
         return httpResponse;

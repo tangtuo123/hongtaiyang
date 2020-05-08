@@ -29,23 +29,18 @@ public class DecryptRequestBodyAdvice implements RequestBodyAdvice {
 
     @Override
     public boolean supports(MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
-        return Objects.requireNonNull(methodParameter.getMethod()).isAnnotationPresent(Secret.class);
+        // 对加了@Secret注解并且decrypt=true的方法请求数据进行解密处理
+        return Objects.requireNonNull(methodParameter.getMethod()).isAnnotationPresent(Secret.class) && methodParameter.getMethod().getAnnotation(Secret.class).decrypt();
     }
 
     @Override
     public HttpInputMessage beforeBodyRead(HttpInputMessage httpInputMessage, MethodParameter methodParameter, Type type, Class<? extends HttpMessageConverter<?>> aClass) {
-        // 对加了@Secret注解并且decrypt=true的方法请求数据进行解密处理
-        Method method = methodParameter.getMethod();
-        assert method != null;
-        if (method.getAnnotation(Secret.class).decrypt()) {
-            try {
-                return new DecryptHttpInputMessage(httpInputMessage, privateKey, "UTF-8");
-            } catch (Exception e) {
-                e.printStackTrace();
-                throw SysException.asException(SystemCode.ENCRYPT_ERROR, e.getMessage());
-            }
+        try {
+            return new DecryptHttpInputMessage(httpInputMessage, privateKey, "UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw SysException.asException(SystemCode.ENCRYPT_ERROR, e.getMessage());
         }
-        return httpInputMessage;
     }
 
     @Override

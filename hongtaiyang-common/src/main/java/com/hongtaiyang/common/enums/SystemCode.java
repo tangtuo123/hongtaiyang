@@ -10,6 +10,7 @@ public enum SystemCode {
     LOGIN_ERROR("0002", "登录失败"),
     PARAMETER_ERROR("0003", "参数验证失败"),
     CREATE_ERROR("0004", "创建失败"),
+    ENCRYPT_ERROR("0005","加解密异常"),
 
     ;
 

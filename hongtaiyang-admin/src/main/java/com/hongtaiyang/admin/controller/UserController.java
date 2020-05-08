@@ -3,6 +3,7 @@ package com.hongtaiyang.admin.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hongtaiyang.admin.service.IUserService;
 import com.hongtaiyang.common.annotation.Authentication;
+import com.hongtaiyang.common.annotation.Secret;
 import com.hongtaiyang.common.constant.RedisConstant;
 import com.hongtaiyang.common.constant.TerminalTypeConstant;
 import com.hongtaiyang.common.entity.HttpResponse;
@@ -45,9 +46,10 @@ public class UserController {
      */
     private static final Integer MAX_LOGIN_ERROR_TIMES = 5;
 
+    @Secret(decrypt = false)
     @PostMapping("/login")
     @ApiOperation(value = "登录")
-    public HttpResponse login(@Validated @RequestBody UserRequest user, HttpServletResponse response) throws Exception {
+    public HttpResponse login(@RequestBody UserRequest user, HttpServletResponse response) throws Exception {
         // 首先从redis查询最近输错密码的次数
         Object times = redisUtil.get(RedisConstant.LOGIN_ERROR_TIMES_ADMIN_PREFIX + user.getUserName());
         if (times != null && (Integer) times >= MAX_LOGIN_ERROR_TIMES) {
@@ -89,6 +91,7 @@ public class UserController {
         return HttpResponse.success(true);
     }
 
+    @Secret
     @Authentication
     @PostMapping(value = "/create")
     @ApiOperation(value = "创建用户")

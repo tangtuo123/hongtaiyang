@@ -11,6 +11,9 @@ spring:
     name: api-tool
   main:
     allow-bean-definition-overriding: true
+  encrypt:
+    rsaPublicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdPrSDvPLLR5wzGZ/GZR9wnBIicNiQwTYs0k9aZFR2y5pxHGaW5uqirhtPxMu68R5zFKvmxfx5EevB+zlT6FDnst5d4Y29VtZXt3ImvOQO0TRO14Jh5hP4V03lXr/uUPE6+7N37r0DAurNrvcrxbFjjEO/5J+CjEBl+iLnjUapsQIDAQAB
+    rsaPrivateKey: MIICdwIBADANBgkqhkiG9w0BAQEFAASCAmEwggJdAgEAAoGBAN0+tIO88stHnDMZn8ZlH3CcEiJw2JDBNizST1pkVHbLmnEcZpbm6qKuG0/Ey7rxHnMUq+bF/HkR68H7OVPoUOey3l3hjb1W1le3cia85A7RNE7XgmHmE/hXTeVev+5Q8Tr7s3fuvQMC6s2u9yvFsWOMQ7/kn4KMQGX6IueNRqmxAgMBAAECgYB1MZD3M3A8w5r26nza35fu0407lyDwVJg419JW5ExlfOY7QjsJdhoVwDoRYAI27SAe/3UrUfaxvw9t+oBcdPPdO5miTuXuepHM6b6K3N3ipdzCMXhH7WE+P98WJpqquEx3kB2epj0U0nSg1APk9xu0cEHs9EEwjeLIl0WYXIt4AQJBAPDRpkgGicGclDe+I/pzcqLHVmmgDgL65LgO3/VtEgOn2HUG+rEEBhwq1SNeR8AvAfE5iGbeEYNxk5+U1j+M4jECQQDrMStQV+3iZ0J+37bHXESTfOfsfZOceQMYZ2zJgEbU76eto29uFeHGTKvLvcFRYP5elv3BmTOCgQig4A7iQN+BAkEAzvvTSOrdslyrhHHYKKbb7A8bNbQM9wDAX3bhhefWaO/1+zghds43ljQ2d6zMTOHacIR7uba7JNgVAz+BGqQzsQJBAMeTBao7swT3kpmOxM8PILH2v+cR+HxCw7mlqc6jJ3fxlVvm39uOffODhBRzhOPFZpRllBcAJZGMZQH+nyKm4gECQGc0pqWREhnibbXx9cxMkO1JibZak0ziRAUUdu71DhCnPqNODLNFIJ8+I9lRiHfrLPTLbcG0l9y6G0rSGFGZ4ME=
 swagger2:
   apiInfo:
     title: 鸿泰洋平台-客户端api
@@ -26,6 +29,9 @@ swagger2:
 mybatis-plus:
   mapper-locations: classpath*:mapper/*.xml
   type-aliases-package: cn.com.citydo.api.tool.interfaces.entity
+
+
+
 
 
 

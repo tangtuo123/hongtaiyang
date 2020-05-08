@@ -30,7 +30,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
-        // 从 http 请求头中取出 token
+        /*// 从 http 请求头中取出 token
         String token = request.getHeader("Authorization");
         // 如果不是映射到方法直接通过
         if (!(object instanceof HandlerMethod)) {
@@ -75,7 +75,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                     throw SysException.asException(SystemCode.AUTH_ERROR, "登录已失效,请重新登录");
                 }
             }
-        }
+        }*/
         return true;
     }
 

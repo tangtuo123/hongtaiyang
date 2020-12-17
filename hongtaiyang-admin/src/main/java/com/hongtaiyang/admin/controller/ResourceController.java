@@ -4,11 +4,16 @@ import com.hongtaiyang.admin.service.ResourceService;
 import com.hongtaiyang.common.entity.HttpResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ：tangtuo
@@ -24,16 +29,19 @@ public class ResourceController {
     @Autowired
     private ResourceService resourceService;
 
+    @Resource
+    private RedissonClient redisson;
+
     @GetMapping(value = "/list")
     @ApiOperation(value = "获取所有的资源菜单")
     public HttpResponse selectAll() {
-        return HttpResponse.success(resourceService.selectAll(null));
+        return HttpResponse.success(resourceService.selectFromCache());
     }
 
 
     @GetMapping(value = "/list/{roleId}")
     @ApiOperation(value = "跟据角色id获取当前角色所有的资源菜单")
     public HttpResponse selectByRoleId(@PathVariable Integer roleId) {
-        return HttpResponse.success(resourceService.selectAll(roleId));
+        return HttpResponse.success(resourceService.selectByRoleId(roleId));
     }
 }

@@ -26,7 +26,7 @@ import java.lang.reflect.Method;
  * @date ：Created in 2020/4/25 13:30
  */
 @Slf4j
-@Aspect
+//@Aspect
 @Component
 public class SysLogAspect {
 
@@ -34,12 +34,12 @@ public class SysLogAspect {
     @Autowired
     private ISysLogService sysLogService;
 
-    @Pointcut("@annotation(io.swagger.annotations.ApiOperation)")
+   /* @Pointcut("@annotation(io.swagger.annotations.ApiOperation)")
     public void sysLog() {
 
-    }
+    }*/
 
-    @Before(value = "sysLog()")
+   /* @Before(value = "sysLog()")
     public void before(JoinPoint joinPoint) {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         if (!request.getServletPath().contains("user/login")) {
@@ -57,5 +57,5 @@ public class SysLogAspect {
             sysLog.setModule(StringUtils.join(api.tags(), ","));
             sysLogService.save(sysLog);
         }
-    }
+    }*/
 }

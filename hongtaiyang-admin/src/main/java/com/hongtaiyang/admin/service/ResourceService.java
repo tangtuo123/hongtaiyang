@@ -8,6 +8,10 @@ import java.util.List;
 
 public interface ResourceService extends IService<Resource> {
 
-    List<Resource> selectAll(Integer roleId);
+    List<Resource> selectAll(Integer roleId) throws InterruptedException;
+
+    List<Resource> selectFromCache();
+
+    List<Resource> selectByRoleId(Integer roleId);
 
 }

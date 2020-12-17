@@ -3,6 +3,7 @@ package com.hongtaiyang.common.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -13,7 +14,7 @@ import java.util.List;
  */
 @Data
 @TableName(value = "tb_resource_info")
-public class Resource {
+public class Resource implements Serializable {
     private Integer id;
     private String name;
     private String label;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/sysLog")
-@Api(tags = "系统日志管理类")
+
 public class SysLogController {
 
     @Autowired

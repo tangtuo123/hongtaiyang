@@ -61,7 +61,7 @@ public class RoleController {
 
     @ApiOperation(value = "获取角色详情")
     @GetMapping(value = "/detail/{id}")
-    public HttpResponse getById(@PathVariable Integer id) {
+    public HttpResponse getById(@PathVariable Integer id) throws InterruptedException {
         Role role = roleService.getById(id);
         List<Resource> list = resourceService.selectAll(id);
         Map<String, Object> result = new HashMap<>();

@@ -2,12 +2,12 @@ package com.hongtaiyang.common.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
+import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -82,6 +82,29 @@ public class RedisUtil {
                 redisTemplate.delete(CollectionUtils.arrayToList(key));
             }
         }
+    }
+
+    /**
+     * 添加分布式锁
+     *
+     * @param key   redis的key值
+     * @param value redis的value值，最好传一个uuid，删除锁的时候还要用到
+     * @param times 锁的过期时间  单位：秒
+     * @return
+     */
+    public Boolean addLock(String key, String value, Long times) {
+        return redisTemplate.opsForValue().setIfAbsent(key, value, times, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 删除锁
+     *
+     * @param key   锁的key值
+     * @param value 锁的value值
+     */
+    public void delLock(String key, String value) {
+        String script = "if redis.call(\"get\",KEYS[1]) == ARGV[1] then return redis.call(\"del\",KEYS[1]) else  return 0 end";
+        redisTemplate.execute(new DefaultRedisScript<Long>(script, Long.class), Collections.singletonList(key), value);
     }
 
     /**

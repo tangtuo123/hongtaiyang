@@ -12,11 +12,14 @@ import com.hongtaiyang.common.entity.dto.RoleDTO;
 import com.hongtaiyang.common.entity.request.ResourceRequest;
 import com.hongtaiyang.common.entity.request.RoleRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -63,15 +66,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     }
 
     @Override
+    @Cacheable(value = "role",key = "#id")
     public Role getById(Integer id) {
         return roleMapper.selectById(id);
     }
 
     @Override
-    public Integer updateById(RoleRequest request) {
+    @CachePut(value = "role",key = "#request.role.id")
+    public Role updateById(RoleRequest request) {
         List<Integer> list = new LinkedList<>();
         Role role = request.getRole();
-        list.add(role.getId());
+        /*list.add(role.getId());
         resourceActionRoleService.deleteByRoleId(list);
         List<ResourceActionRole> resourceActionRoles = new LinkedList<>();
         List<ResourceRequest> resourceMenu = request.getResourceMenu();
@@ -82,8 +87,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             resourceActionRole.setResourceId(resourceRequest.getResourceId());
             resourceActionRoles.add(resourceActionRole);
         });
-        resourceActionRoleService.saveBatch(resourceActionRoles);
-        return roleMapper.modifyById(role);
+        resourceActionRoleService.saveBatch(resourceActionRoles);*/
+        roleMapper.modifyById(role);
+        return roleMapper.selectById(request.getRole().getId());
     }
 
     @Override

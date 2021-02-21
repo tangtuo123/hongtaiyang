@@ -1,8 +1,10 @@
 package com.hongtaiyang.admin.controller;
 
+import com.hongtaiyang.common.entity.HttpResponse;
 import com.hongtaiyang.common.utils.RedisUtil;
 import org.redisson.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,9 @@ public class LockController {
 
     @Autowired
     private RedisUtil redisUtil;
+
+    @Value("${spring.profiles.active}")
+    private String env;
 
     @GetMapping("test1")
     public String testLock() {
@@ -102,6 +107,11 @@ public class LockController {
         return val;
     }
 
+    @GetMapping(value = "/get")
+    public String getCurrentProfiles(){
+        return env;
+    }
+
     @GetMapping("/lockDoor")
     public String lockDoor() {
         RCountDownLatch door = redisson.getCountDownLatch("door");
@@ -119,6 +129,21 @@ public class LockController {
         RCountDownLatch door = redisson.getCountDownLatch("door");
         door.countDown();
         return id + "班放学了";
+    }
+
+    @GetMapping(value = "test5")
+    public HttpResponse test5(){
+        RSemaphore semaphore = redisson.getSemaphore("semaphore");
+        boolean b = semaphore.trySetPermits(10);
+        return HttpResponse.success(b);
+    }
+
+    @GetMapping(value = "test5/{cnt}")
+    public HttpResponse test6(@PathVariable Integer cnt) throws InterruptedException {
+        RSemaphore semaphore = redisson.getSemaphore("semaphore");
+        boolean b = semaphore.tryAcquire(cnt);
+
+        return HttpResponse.success(b);
     }
 
 

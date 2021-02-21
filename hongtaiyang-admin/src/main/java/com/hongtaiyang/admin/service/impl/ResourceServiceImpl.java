@@ -109,7 +109,7 @@ public class ResourceServiceImpl extends ServiceImpl<ResourceMapper, Resource> i
     }
 
     @Override
-    @Cacheable(value = "resource", key = "#root.args[0]")
+    @Cacheable(value = "resource", key = "#roleId")
     public List<Resource> selectByRoleId(Integer roleId) {
         List<Resource> resources = resourceMapper.selectByRoleId(roleId);
         List<Resource> result = new LinkedList<>();

@@ -21,7 +21,7 @@ public interface RoleService extends IService<Role> {
 
     Role getById(Integer id);
 
-    Integer updateById(RoleRequest request);
+    Role updateById(RoleRequest request);
 
     List<Role> getAll();
 
